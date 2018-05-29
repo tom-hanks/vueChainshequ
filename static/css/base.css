@@ -1,0 +1,57 @@
+﻿/* CSS reset@ */
+*{ padding: 0; margin: 0;}
+fieldset, img, input, button{ border: none; padding: 0; margin: 0; outline-style: none; }
+input,textarea{ border: none; outline: none; resize: none; /*特殊的属性定义  清除浏览器给input自带的样式*/
+ /*-webkit-appearance: none;*/ /*组件默认的样式空*/}
+textarea { resize: none; }
+s, i, em { font-style: normal; text-decoration: none;}
+img { border: 0; vertical-align: middle; }
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td,a{padding:0;margin:0;}
+table {border-collapse: collapse;border-spacing:0;}
+del, ins {text-decoration:none;}
+fieldset, img {border:0;}
+body,button,textarea{font:14px/1.6 Arial,"Microsoft YaHei";}
+input,select{font:12px/1.6 Arial,"Microsoft YaHei";}
+input,select,img{vertical-align:middle;}
+input,select{outline:none;}
+select{height:22px;line-height:18px;padding:2px;}
+ul,ol{list-style:none;}
+h1, h2, h3, h4, h5, h6 {font-size:14px;font-weight:400;}
+address,cite,dfn,em,var{font-style:normal;}
+legend{display:none;}
+td{font-size:14px;line-height:140%;}
+label{cursor:pointer;}
+input::-moz-focus-inner,button::-moz-focus-inner{border:0;padding:0;}
+em,i{font-style: normal;}
+.w {width: 1200px; margin: 0 auto; }
+.left,.fl{float:left;}
+.right,.fr{float:right;}
+.mt10{margin-top:10px;}
+.mt15{margin-top:15px;}
+.mt20{margin-top:20px;}
+.mr8{margin-right:8px;}
+.ml8{margin-left: 8px;}
+.hide { display: none; }
+.col{ color:#BE2632 !important; }
+.coll{color:#F27F25 !important;}
+.bg{background-color: #BE2632!important;}
+a{text-decoration:none;color:#444;cursor:pointer;}
+a:hover{text-decoration:none;}
+.txthide{text-indent:-999em;overflow:hidden;line-height:0;font-size:0}
+.clearfix:after{content:"";height:0;visibility:hidden;display:block;clear:both;}
+.csw{color:#fff!important;}
+.clearfix{zoom:1;}
+.clear{clear:both;height:0;overflow:hidden;}
+
+
+
+
+
+
+
+
+
+
+
+
+
