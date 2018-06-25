@@ -5,6 +5,7 @@ import App from './App'
 import router from './router/router.js'
 import axios from 'axios'
 Vue.config.productionTip = false
+axios.defaults.baseURL = 'https://www.vue-js.com/api/v1/'//以下 api 路径均以 https://vue-js.com/api/v1 为前缀
 Vue.prototype.$http = axios
 /* eslint-disable no-new */
 new Vue({

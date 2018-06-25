@@ -7,9 +7,8 @@
       <div class="contentFu">
           <div  class="mu-list">
                       <section  class="list" v-for="(item,idnex) in tabs[selected].tabContent">
-                        <router-link :to="{path:'banana',param:{color:'yellow'}}" tag="em"></router-link>
                           <img  class="" v-bind:src="item.author.avatar_url"  alt="user">
-                          <router-link :to="{name:'details',params:{id:item.id}}"  class="content"  tag="div">
+                          <div  class="content">
                               <div  class="list_title clearfix">
                                   <span v-if='item.top' class='dingtop'>置顶</span> 
                                   <span v-else-if="item.top === false&&item.tab==='ask'" class="elsedingtop">问答</span>
@@ -23,7 +22,7 @@
                               </div>
                               <div  class="timer"><span >179 / 117440</span>  <span >2天前</span>
                               </div>
-                          </router-link>
+                          </div>
                       </section>
                     <p class="loading">{{loading}}</p>
           </div>
@@ -180,7 +179,6 @@ export default {
     },
     changeTab(index) {
       this.selected = index;
-      this.loading='正在加载中...'
       this.tab_ajax=this.tabs[this.selected].tabName;
       if (this.tabs[this.selected].tabContent <= 0) {
         this.tab_ajax=this.tabs[this.selected].tabName;
@@ -202,7 +200,9 @@ export default {
     position: absolute;
     top: 4.2rem;
 } */
-
+.hello{
+  margin-top: 4.2rem;
+}
 h1,
 h2 {
   font-weight: normal;
@@ -285,7 +285,6 @@ a {
       font-weight: 700;
   text-align: left;
 }
-
 span.dingtop{
   background: #369219;
 }
@@ -343,9 +342,7 @@ span.dingtop,span.elsedingtop{
   -webkit-animation-delay: -0.9s;
   animation-delay: -0.9s;
 }
-.loading{
-  margin-bottom:3rem;
-}
+
 @-webkit-keyframes cubemove {
   25% {
     -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);

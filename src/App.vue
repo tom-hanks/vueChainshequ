@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <ul class="ul_base">
+    <ul class="ul_base" v-if="$route.name !== 'details'">
       <router-link active-class="nav_color" to="/home" tag="li"><s class="iconfont icon-shouye"></s>首页</router-link>
       <router-link active-class="nav_color" to="/fabu" tag="li"><s class="iconfont icon-daohangfenlei1"></s>发布</router-link>
       <router-link active-class="nav_color" to="/xiaoxi" tag="li"><s class="iconfont icon-22"></s>消息</router-link>
@@ -34,6 +34,7 @@ export default {
   background: #fff;
   position:fixed;
   bottom: 0;
+  z-index: 3;
 }
 .ul_base>li.nav_color{
   color:red;

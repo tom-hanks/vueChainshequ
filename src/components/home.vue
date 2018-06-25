@@ -12,8 +12,6 @@
           
     </div>
     <Navtab v-bind:message="header_bg"></Navtab>
-    <input type="text" placeholder="我是输入框" v-model="msg">
-    <h1>{{ msg }}</h1>
   </div>
 </template>
 
@@ -28,7 +26,6 @@ export default {
   },
   data () {
     return {
-      msg: '哈哈哈',
       colorNume:false,
       activeColor:'red',
       home_bg:[
@@ -70,7 +67,9 @@ export default {
   height:4.2rem ;
   line-height: 4.2rem;
   background: #009688;
-  position: relative;
+  position: fixed;
+  top: 0;
+  z-index: 3;
   border-top:1px solid #fff;
 }
 .header_style0{
