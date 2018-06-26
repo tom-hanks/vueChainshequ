@@ -1,15 +1,15 @@
 <template>
   <div class="form-fu">
     <h2>我是我的</h2>
-    <!-- <div class="form-class"> -->
-        <!-- <form @submit.prevent="submit">  
+  <div class="form-class">
+        <form @submit.prevent="submit">  
                 <label for="">账号</label><input class="login" type="text" name="name" v-model="inputtext.name">  
                 <label for="">密码</label><input class="login" type="password" name="password" v-model="inputtext.password">  
                 <input type="submit" value="提交">  
-        </form>  -->
-
-        <!-- <label for=""> 填写token </label> <input class="login" type="text" placeholder="请输入token" v-model="tokenText"><button value="提交2"></button>  -->
-    <!-- </div> -->
+        </form> 
+        <label for=""> 填写token </label> <input class="login" type="text" placeholder="请输入token" v-model="tokenText">
+        <input type="submit" @click="stoken()" value="提交2"></input>
+    </div> 
   </div>
 </template>
 
@@ -24,16 +24,16 @@ export default {
     }
   },
   mounted(){
-      this.$http.post(this.$http.defaults.baseURL+'/accesstoken',{
-        accesstoken:"8d99266f-6b12-47f2-aa83-d8507584973a"
-      })
-      .then((response) =>{
-            console.log(response);
-      })
-      .catch(function (error) {
-            console.log(error);
+      // this.$http.post(this.$http.defaults.baseURL+'/accesstoken',{
+      //   accesstoken:"8d99266f-6b12-47f2-aa83-d8507584973a"
+      // })
+      // .then((response) =>{
+      //       console.log(response);
+      // })
+      // .catch(function (error) {
+      //       console.log(error);
 
-       });
+      //  });
   },
   methods:{
     submit(){
@@ -49,6 +49,26 @@ export default {
 
        });
       console.log(this.inputtext);  
+    },
+    stoken(){
+      let $eit=this;
+       this.$http.post(this.$http.defaults.baseURL+'/accesstoken',{
+        accesstoken:$eit.tokenText
+      })
+      .then((response) =>{
+        // if(response.status == 200){
+            console.log(response);
+            localStorage.setItem('accesstoken',this.tokenText)
+        // }
+      })
+      .catch(function (error) {
+        console.log(error.response)
+        // if(error.response.status == 403){
+            alert('输入的秘钥错误')
+        // }
+       });
+      
+      console.log(this.tokenText)
     }
   }
 }
@@ -70,7 +90,7 @@ li {
 a {
   color: #42b983;
 }
-/* .login{
+.login{
   border:1px solid red;
 }
 .form-fu{
@@ -78,5 +98,5 @@ a {
   margin: 0;
   padding: 0;
   overflow: hidden;
-} */
+}
 </style>
