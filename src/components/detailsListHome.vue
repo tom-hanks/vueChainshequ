@@ -9,16 +9,27 @@
       <div v-for="(item,index) in tabArry" v-if="item.id == tabName " class="content_title">
         <span>{{item.name}}</span>{{title}}
       </div>
-        <div class="label"><span>发布于 1年前</span> <span>作者 {{authorImase.author.loginname}}</span> <span>{{authorImase.visit_count}} 次浏览</span> <span v-for="(item,index) in tabArry" v-if="item.id == tabName ">来自 {{item.name}}</span></div>
+      <!-- 登陆后显示收藏 -->
+        <div class="shoucang"
+        @click="collect(authorImase.id)"
+        ><span class="iconfont  shoucang_icon fl"
+        v-bind:class="shouchang_pan?'icon-shoucang2':'icon-shoucang1'"
+        ></span><h1 class="fl shoucang_icon_h1">收藏主题</h1></div>
+        <div class="label"><span>发布于 {{authorImase.create_at | timeago}}</span> <span>作者 {{authorImase.author.loginname}}</span> <span>{{authorImase.visit_count}} 次浏览</span> <span v-for="(item,index) in tabArry" v-if="item.id == tabName ">来自 {{item.name}}</span></div>
     </div>
     <div v-html="conten_Txt" class="conten">{{ conten_Txt }}</div>
+    <!-- 回复框 -->
+    <div class="renl clearfixed">
+      <textarea name="" id="renl_textarea" ></textarea>
+      <button class="renl_button">发表</button>
+    </div>
     <ul class="replies">
         <li class="replies_li_first">{{huifuNum}}条回复</li>
         <li class="reply" v-for="(item,index) in huifuConnten">
             <section class="msg">
                 <div class="author">
                   <img class="" v-bind:src="item.author.avatar_url" alt="user"> 
-                  <span class="name">{{item.author.loginname}}</span> <span class="timer">{{index+1}}楼 • 1年前</span>
+                  <span class="name">{{item.author.loginname}}</span> <span class="timer">{{index+1}}楼 • {{item.create_at | timeago}}</span>
                 </div> 
                   <div class="ups">
                     <i class="mu-icon iconfont icon-dianzan  material-icons" style="font-size: 16px; width: 16px; height: 16px;"></i> 
@@ -33,21 +44,25 @@
             </p>
           </li>
     </ul>
+    <login-tan v-bind:loginTanFlag="header_bg" @changesbox="showDialog"></login-tan>
   </div>
 </template>
-
 <script>
+ import timeago from 'timeago.js'
+ import loginTan  from '../components/lopginalaert'
 export default {
   name: 'wode',
+  components:{
+    loginTan
+  },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
       title:'',
       authorImase:{
-        author:{
-          loginname:''
-        },
+        author:'',
       },
+      header_bg:false,
       tabName:'',
       tabArry:[
         {id:'all',name:'全部'},
@@ -59,12 +74,21 @@ export default {
       ],
       conten_Txt:'',
       huifuNum:0,
-      huifuConnten:''
+      huifuConnten:'',
+      shouchang_pan:false,
+      accesstoken:''//判断有没有token
     }
   },
  created(){
-   
-      
+   this.accesstoken=localStorage.getItem('accesstoken')
+
+  },
+  filters:{
+    timeago(val){
+         let time = new Date(val)
+            let thistime = timeago()
+            return thistime.format(time, 'zh_CN') //将UTC时间转换格式---> 几天前,几小时前...
+    }
   },
  mounted(){
       this.$http.get('https://www.vue-js.com/api/v1/topic/'+this.$route.params.id)
@@ -72,6 +96,7 @@ export default {
                   this.authorImase=response.data.data;
                   this.title=response.data.data.title;
                   this.tabName=response.data.data.tab;
+                  // console.log(response.data.data.content)
                   this.conten_Txt=response.data.data.content;
                   this.huifuNum=response.data.data.replies.length;
                   this.huifuConnten=response.data.data.replies;
@@ -84,11 +109,36 @@ export default {
               });
                   console.log('三')
       console.log(this.$route.params.id)
-    
   },
   methods:{
    back_page(){
      this.$router.back(-1);
+   },
+   collect(val){//收藏主题
+   if(!this.accesstoken){
+     this.header_bg=true;
+   }else{
+     let that = this
+      this.$http.post('https://www.vue-js.com/api/v1/topic/collect',{
+        topic_id: val
+        })
+                .then((response) =>{
+                  console.log(response.data);
+                })
+              .catch(function (error) {
+                console.log(error);
+              });
+   }
+
+   },
+   showDialog(data){
+     if(data==false){
+       this.header_bg=false
+     }else{
+       this.header_bg=true
+     }
+     console.log('我是子组件打印')
+     console.log(data)
    }
   }
 }
@@ -183,9 +233,7 @@ a {
   overflow: auto;
   text-align: left;
 }
-.wode /deep/ .markdown-text{
-  display: none;
-}
+
 .md_header{
   padding-bottom: .5rem;;
 }
@@ -212,14 +260,45 @@ a {
       font-size: 1.53125rem;
           border-bottom: 1px solid #eee;
 }
- .wode /deep/ ..markdown-text h2,.wode /deep/ ..markdown-text h3{
+ .wode /deep/ .markdown-text h2,.wode /deep/ .markdown-text h3{
       margin: 30px 0 15px;
     border-bottom: 1px solid #eee;
 }
 .wode /deep/ .md_header .label{
   text-align: left;
+  margin:.5rem 1rem; 
 }
-
+.shoucang{
+  height: 3.125rem;
+  line-height: 3.125rem;
+  text-align: left;
+  margin: .5rem 1rem;
+}
+.shoucang_icon{
+  font-size: 25px;
+}
+.shoucang_icon_h1{
+  font-size: 16px;
+  color: #009688;
+  font-weight: 800;
+  margin-left: .9125rem;
+}
+.renl_button{
+  display: block;
+  float: right;
+}
+.wode /deep/ .renl{
+  /* width: 100%; */
+  /* height: 100px; */
+  margin: .5rem 1rem;
+  background: pink;
+}
+.wode /deep/ #renl_textarea{
+  display: inline-block;
+  margin: .5rem 1rem;
+  width:80%;
+  height: 9.75rem;
+}
 .wode /deep/ .markdown-text h1, .wode /deep/ .markdown-text h2, .wode /deep/ .markdown-text h3, .wode /deep/ .markdown-text h4, .wode /deep/ .markdown-text h5, .wode /deep/ .markdown-text h6{
   font-weight: 700;
   text-align: left;
