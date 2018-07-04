@@ -9,7 +9,7 @@
                       <section  class="list" v-for="(item,idnex) in tabs[selected].tabContent">
                         <router-link :to="{path:'banana',param:{color:'yellow'}}" tag="em"></router-link>
                           <img  class="" v-bind:src="item.author.avatar_url"  alt="user">
-                          <router-link :to="{name:'details',params:{id:item.id}}"  class="content"  tag="div">
+                         <router-link :to="{name:'details',params:{id:item.id}}"  class="content"  tag="div">
                               <div  class="list_title clearfix">
                                   <span v-if='item.top' class='dingtop'>置顶</span> 
                                   <span v-else-if="item.top === false&&item.tab==='ask'" class="elsedingtop">问答</span>
@@ -92,52 +92,23 @@ export default {
       jiazai: true
     };
   },
+  destroyed(){
+    window.removeEventListener("scroll",this.panduanweizhi,false)
+  },
   created() {
     //在模板渲染成html前调用，即通常初始化某些属性值，然后再渲染成视图。
+    console.log('测缓存')
   },
   mounted() {
     this.ajaxHomeList(1, 1, this.tab_ajax);
     var el = this;
-  //文档高度
-      function getDocumentTop() {
-          var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
-          if (document.body) {
-              bodyScrollTop = document.body.scrollTop;
-          }
-          if (document.documentElement) {
-              documentScrollTop = document.documentElement.scrollTop;
-          }
-          scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;    return scrollTop;
-      }
-//可视窗口高度
-      function getWindowHeight() {
-          var windowHeight = 0;    if (document.compatMode == "CSS1Compat") {
-              windowHeight = document.documentElement.clientHeight;
-          } else {
-              windowHeight = document.body.clientHeight;
-          }
-          return windowHeight;
-      }
-//滚动条滚动高度
-      function getScrollHeight() {
-          var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
-          if (document.body) {
-              bodyScrollHeight = document.body.scrollHeight;
-          }
-          if (document.documentElement) {
-              documentScrollHeight = document.documentElement.scrollHeight;
-          }
-          scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;    return scrollHeight;
-      }
-   window.addEventListener("scroll", function() {
-      if(getScrollHeight() == getWindowHeight() + getDocumentTop()){
-        //当滚动条到底时,这里是触发内容
-          el.tabs[el.selected].down_data_num += 1;
-          el.ajaxHomeList(el.tabs[el.selected].down_data_num, 2, el.tab_ajax);
-          console.log("到达底部");
 
-      }
-    });
+      window.addEventListener("scroll",this.panduanweizhi)
+  //  window.addEventListener("scroll", function() {
+  //     if(getScrollHeight() == getWindowHeight() + getDocumentTop()){
+  //       el.panduanweizhi();
+  //     }
+  //   });
     // console.log('默认加载');
     // console.log( document.querySelector('.mu-list'))
   },
@@ -191,6 +162,49 @@ export default {
           this.tabs[this.selected].tabName
         );
       }
+    },
+    // haoba(){
+    //   alert('好吧')
+    // },
+    panduanweizhi(){
+        //文档高度
+      function getDocumentTop() {
+          var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+          if (document.body) {
+              bodyScrollTop = document.body.scrollTop;
+          }
+          if (document.documentElement) {
+              documentScrollTop = document.documentElement.scrollTop;
+          }
+          scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;    return scrollTop;
+      }
+//可视窗口高度
+      function getWindowHeight() {
+          var windowHeight = 0;    if (document.compatMode == "CSS1Compat") {
+              windowHeight = document.documentElement.clientHeight;
+          } else {
+              windowHeight = document.body.clientHeight;
+          }
+          return windowHeight;
+      }
+//滚动条滚动高度
+      function getScrollHeight() {
+          var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+          if (document.body) {
+              bodyScrollHeight = document.body.scrollHeight;
+          }
+          if (document.documentElement) {
+              documentScrollHeight = document.documentElement.scrollHeight;
+          }
+          scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;    return scrollHeight;
+      }
+            if(getScrollHeight() == getWindowHeight() + getDocumentTop()){
+                //当滚动条到底时,这里是触发内容
+                this.tabs[this.selected].down_data_num += 1;
+                this.ajaxHomeList(this.tabs[this.selected].down_data_num, 2, this.tab_ajax);
+                console.log("到达底部");
+            }
+      
     }
   }
 };

@@ -48,7 +48,7 @@ var myInterceptor=axios.interceptors.request.use(
                 //     path: '/wode',
                 //     query: {redirect: router.currentRoute.fullPath}
                 // })
-                    return false;
+                    // return false;
 
             }
             if(!xtoken){//此处判断是当POST的时候没有token就去输入框的token去验证

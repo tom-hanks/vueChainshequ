@@ -1,9 +1,18 @@
 <template>
-  <div v-show="loginPan" class="login_tan">
+  <div v-if="loginPan.type" class="login_tan">
         <p class="login_tan_k">提示：</p>
-        <p class="login_tan_tip">请先登录，登录后即可点赞。</p>
-        <router-link class="login_tan_button" tag="button" to="/wode">去登陆</router-link>
-        <button class="login_tan_button" @click="loginhide()">取消</button>
+        <p class="login_tan_tip">{{loginPan.tip}}</p>
+        <router-link 
+        class="login_tan_button login_tan_left" 
+        v-if="loginPan.num==1 || loginPan.num==0?false:true" 
+        @click.native="loginhide()" 
+        tag="button" 
+        to="/wode">登陆</router-link>
+        <button 
+        class="login_tan_button login_tan_right" 
+        v-if="loginPan.num==0?false:true" 
+        v-bind:class="loginPan.num ==1?login_tan_yi:''"
+        @click="loginhide()">取消</button>
   </div>
 
 </template>
@@ -15,30 +24,37 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      loginPan:false
+      loginPan:{
+        type:false,
+        tip:"父组件传值控制显示隐藏",
+        num:2//按钮个数
+      },
+      login_tan_yi:'login_tan_yi'
     }
   },
   created(){
-  
+    
   },
   filters:{
 
   },
   mounted(){
-    
+    // console.log(this.loginTanFlag)
 },
  watch:{
-     loginTanFlag(ewValue,oldValue){
-       this.loginPan=ewValue;
-        console.log(ewValue)
+     loginTanFlag:{
+       handler: function (val, oldVal) { 
+         this.loginPan.type=val.typePan //父组件里 对象要有 typePan和tip两个属性
+         this.loginPan.tip=val.tip
+         this.loginPan.num=val.num
+        },
+      deep: true
      }
   },
   methods:{
     loginhide(){
       this.$emit('changesbox',false);//告诉父组件该隐藏了
-      // console.log(this.loginTanFlag)
     }
-
   }
 }
 </script>
@@ -48,6 +64,7 @@ export default {
 .login_tan{
     width:22.5rem;
     height: 12.5rem;
+    border-radius: 1rem;
     background: #fff;
     position: fixed;
     top:50%;
@@ -67,7 +84,16 @@ export default {
 }
 .login_tan_button{
     padding:3px 10px;
-    margin-top: 1.25rem;
-    margin-left: 1.625rem;
+    margin-top: 1.6rem;
+    border-radius: .2875rem;
+}
+.login_tan_left{
+  margin-right: 1.25rem;
+}
+.login_tan_right{
+  margin-left: 1.25rem;
+}
+.login_tan_yi{
+  margin-left: 0;
 }
 </style>

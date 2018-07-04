@@ -11,7 +11,9 @@
             </transition>
           
     </div>
-    <Navtab v-bind:message="header_bg"></Navtab>
+   <keep-alive include="HelloWorld">
+      <Navtab v-bind:message="header_bg"></Navtab>
+   </keep-alive> 
   </div>
 </template>
 
