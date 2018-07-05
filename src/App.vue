@@ -1,11 +1,13 @@
 <template>
   <div id="app">
-      <router-view></router-view>
+    <keep-alive include="home">
+        <router-view></router-view>
+    </keep-alive>
     <ul class="ul_base" v-if="$route.name !== 'details'">
       <router-link active-class="nav_color" to="/home" tag="li"><s class="iconfont icon-shouye"></s>首页</router-link>
-      <router-link active-class="nav_color" to="/fabu" tag="li"><s class="iconfont icon-daohangfenlei1"></s>发布</router-link>
-      <router-link active-class="nav_color" to="/xiaoxi" tag="li"><s class="iconfont icon-22"></s>消息</router-link>
-      <router-link active-class="nav_color" to="/wode" tag="li"><s class="iconfont icon-yonghu"></s>我的</router-link>
+      <router-link active-class="nav_color" to="/fabu" tag="li"><s class="iconfont icon-caidan1"></s>发布</router-link>
+      <router-link active-class="nav_color" to="/xiaoxi" tag="li"><s class="iconfont icon-huifu"></s>消息</router-link>
+      <router-link active-class="nav_color" to="/wode" tag="li"><s class="iconfont icon-wode"></s>我的</router-link>
     </ul>
   </div>
 </template>
@@ -37,8 +39,8 @@ export default {
   z-index: 3;
 }
 .ul_base>li.nav_color{
-  color:red;
-  background:burlywood;
+  color:#009688;
+  /* background:burlywood; */
 }
 .ul_base>li{
   width: 25%;
@@ -46,5 +48,6 @@ export default {
   line-height: 3rem;
   text-align: center;
   float: left;
+  cursor: pointer;
 }
 </style>

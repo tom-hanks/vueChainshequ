@@ -65,10 +65,10 @@ var myInterceptor=axios.interceptors.request.use(
                 accesstoken:xtoken,
             }
         }else if(config.method=='get'){
-            config.params = {
-                accesstoken:xtoken,
-                ...config.params
-            }
+            // config.params = {
+            //     accesstoken:xtoken,
+            //     ...config.params
+            // }
         }
         return config
     },function(error){

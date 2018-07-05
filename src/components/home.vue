@@ -11,9 +11,7 @@
             </transition>
           
     </div>
-   <keep-alive include="HelloWorld">
-      <Navtab v-bind:message="header_bg"></Navtab>
-   </keep-alive> 
+        <Navtab v-bind:message="header_bg"></Navtab>
   </div>
 </template>
 
@@ -40,6 +38,7 @@ export default {
     }
   },
   created() {//页面加载完成前开始执行
+  console.log('死犟')
         let body = document.querySelector('body')
         body.addEventListener('click',(e)=>{
             if(e.target.id!='caidan')  {

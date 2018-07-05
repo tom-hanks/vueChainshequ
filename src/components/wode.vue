@@ -128,7 +128,7 @@ export default {
       let $eit = this;
       this.$http
         .post(apis + "/accesstoken", {
-          accesstoken: $eit.tokenText //8d99266f-6b12-47f2-aa83-d8507584973a
+          accesstoken: $eit.tokenText //6b1374b4-00fa-43e9-847a-344a5155afac
         })
         .then(response => {
           console.log(response.data);

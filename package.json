@@ -16,8 +16,10 @@
     "axios": "^0.18.0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
+    "marked": "^0.4.0",
     "timeago.js": "^3.0.2",
     "vue": "^2.5.2",
+    "vue-markdown": "^2.2.4",
     "vue-router": "^3.0.1",
     "vue-scroller": "^2.2.4"
   },

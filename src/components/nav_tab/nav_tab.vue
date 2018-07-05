@@ -2,14 +2,18 @@
   <div class="hello">
     <!-- <h2>我是切换导航组件</h2> -->
       <ul class="nav_tab" v-bind:class="message">
-        <li v-for="(item,index) in tabs" v-bind:class="{cur:selected===index}" v-on:click="changeTab(index)">{{item.tab}}</li>
+        <li v-for="(item,index) in tabs" v-bind:class="{cur:selected===index}" v-on:click="changeTab(index,item.tabName)">{{item.tab}}</li>
       </ul>
       <div class="contentFu">
           <div  class="mu-list">
                       <section  class="list" v-for="(item,idnex) in tabs[selected].tabContent">
                         <router-link :to="{path:'banana',param:{color:'yellow'}}" tag="em"></router-link>
                           <img  class="" v-bind:src="item.author.avatar_url"  alt="user">
-                         <router-link :to="{name:'details',params:{id:item.id}}"  class="content"  tag="div">
+                          
+                         <router-link 
+                         :to="{name:'details',params:{id:item.id}}"  
+                         class="content"  
+                         tag="div">
                               <div  class="list_title clearfix">
                                   <span v-if='item.top' class='dingtop'>置顶</span> 
                                   <span v-else-if="item.top === false&&item.tab==='ask'" class="elsedingtop">问答</span>
@@ -17,35 +21,28 @@
                                   <span v-else-if="item.top === false&&item.tab==='good'" class="elsedingtop" >精华</span>
                                   <span v-else-if="item.top === false&&item.tab==='weex'" class="elsedingtop" >weex</span>
                                   <span v-else-if="item.top === false&&item.tab==='job'" class="elsedingtop" >招聘</span>
-
-
                                    <h3 >{{item.title}}</h3>
                               </div>
                               <div  class="timer"><span >179 / 117440</span>  <span >2天前</span>
                               </div>
                           </router-link>
+
                       </section>
                     <p class="loading">{{loading}}</p>
           </div>
       </div>
-
-      <!-- 上拉加载特效 -->
-      <!-- <div class="spinners" v-show='jiazai'>
-        <div class="cube1"></div>
-        <div class="cube2"></div>
-      </div> -->
   </div>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "HelloWorld2",
   props: ["message"],
   data() {
     return {
       msg: "Welcome to Your Vue.js App",
       selected: 0,
-      loading:'正在加载中',
+      loading: "正在加载中",
       tabs: [
         {
           tab: "全部",
@@ -92,25 +89,35 @@ export default {
       jiazai: true
     };
   },
-  destroyed(){
-    window.removeEventListener("scroll",this.panduanweizhi,false)
+  activated: function() {
+    window.addEventListener("scroll", this.panduanweizhi);
+  },
+  deactivated() {
+    window.removeEventListener("scroll", this.panduanweizhi, false);
+  },
+  watch: {
+    tab_ajax(newvalue) {
+      this.tab_ajax = newvalue;
+    },
+    selected(newvalue) {
+      console.log(this.tabs[this.selected].tabContent.length);
+      if (this.tabs[this.selected].tabContent.length > 0) {
+        this.tabs[this.selected].tabContent = [];
+        this.changeTab(newvalue, this.tab_ajax); //为了解决因为keep-alive缓存导致不执行的问题，所以监听触发
+      }
+
+      console.log(newvalue);
+    }
   },
   created() {
     //在模板渲染成html前调用，即通常初始化某些属性值，然后再渲染成视图。
-    console.log('测缓存')
+    console.log("测缓存");
   },
   mounted() {
     this.ajaxHomeList(1, 1, this.tab_ajax);
     var el = this;
 
-      window.addEventListener("scroll",this.panduanweizhi)
-  //  window.addEventListener("scroll", function() {
-  //     if(getScrollHeight() == getWindowHeight() + getDocumentTop()){
-  //       el.panduanweizhi();
-  //     }
-  //   });
-    // console.log('默认加载');
-    // console.log( document.querySelector('.mu-list'))
+    window.addEventListener("scroll", this.panduanweizhi);
   },
   methods: {
     ajaxHomeList(a, b, d) {
@@ -120,14 +127,9 @@ export default {
           params: { tab: d, page: a }
         })
         .then(response => {
-          if(response.data.data.length<25){
-            // console.log('返回数据的长度---'+response.data.data.length)
-            this.ok_data=true;
-            this.loading='已加载全部'
-            return false;
-          }else{
-            this.loading='正在加载中'
-          }
+          console.log("2222");
+
+          console.log(response.data.data.length);
 
           if (b == 1) {
             // 顶部
@@ -144,67 +146,84 @@ export default {
             ].tabContent.concat(response.data.data);
             console.log(this.tabs[this.selected].tabContent);
           }
+          if (response.data.data.length < 10) {
+            // console.log('返回数据的长度---'+response.data.data.length)
+            this.ok_data = true;
+            this.loading = "已加载全部";
+            return false;
+          } else {
+            this.loading = "正在加载中";
+          }
         })
         .catch(function(error) {
           console.log(error);
         });
     },
-    changeTab(index) {
+    changeTab(index, tab) {
+      //切换tab选择
       this.selected = index;
-      this.loading='正在加载中...'
-      this.tab_ajax=this.tabs[this.selected].tabName;
-      if (this.tabs[this.selected].tabContent <= 0) {
-        this.tab_ajax=this.tabs[this.selected].tabName;
-        this.ajaxHomeList(
-          this.down_data_num,
-          2,
-          null,
-          this.tabs[this.selected].tabName
-        );
+      this.loading = "正在加载中...";
+      this.tab_ajax = this.tabs[this.selected].tabName;
+      if (this.tabs[this.selected].tabContent.length <= 0) {
+        this.tab_ajax = this.tabs[this.selected].tabName;
+        this.ajaxHomeList(this.down_data_num, 2, this.tab_ajax);
       }
     },
-    // haoba(){
-    //   alert('好吧')
-    // },
-    panduanweizhi(){
-        //文档高度
+    panduanweizhi() {
+      //文档高度
       function getDocumentTop() {
-          var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
-          if (document.body) {
-              bodyScrollTop = document.body.scrollTop;
-          }
-          if (document.documentElement) {
-              documentScrollTop = document.documentElement.scrollTop;
-          }
-          scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;    return scrollTop;
+        var scrollTop = 0,
+          bodyScrollTop = 0,
+          documentScrollTop = 0;
+        if (document.body) {
+          bodyScrollTop = document.body.scrollTop;
+        }
+        if (document.documentElement) {
+          documentScrollTop = document.documentElement.scrollTop;
+        }
+        scrollTop =
+          bodyScrollTop - documentScrollTop > 0
+            ? bodyScrollTop
+            : documentScrollTop;
+        return scrollTop;
       }
-//可视窗口高度
+      //可视窗口高度
       function getWindowHeight() {
-          var windowHeight = 0;    if (document.compatMode == "CSS1Compat") {
-              windowHeight = document.documentElement.clientHeight;
-          } else {
-              windowHeight = document.body.clientHeight;
-          }
-          return windowHeight;
+        var windowHeight = 0;
+        if (document.compatMode == "CSS1Compat") {
+          windowHeight = document.documentElement.clientHeight;
+        } else {
+          windowHeight = document.body.clientHeight;
+        }
+        return windowHeight;
       }
-//滚动条滚动高度
+      //滚动条滚动高度
       function getScrollHeight() {
-          var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
-          if (document.body) {
-              bodyScrollHeight = document.body.scrollHeight;
-          }
-          if (document.documentElement) {
-              documentScrollHeight = document.documentElement.scrollHeight;
-          }
-          scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;    return scrollHeight;
+        var scrollHeight = 0,
+          bodyScrollHeight = 0,
+          documentScrollHeight = 0;
+        if (document.body) {
+          bodyScrollHeight = document.body.scrollHeight;
+        }
+        if (document.documentElement) {
+          documentScrollHeight = document.documentElement.scrollHeight;
+        }
+        scrollHeight =
+          bodyScrollHeight - documentScrollHeight > 0
+            ? bodyScrollHeight
+            : documentScrollHeight;
+        return scrollHeight;
       }
-            if(getScrollHeight() == getWindowHeight() + getDocumentTop()){
-                //当滚动条到底时,这里是触发内容
-                this.tabs[this.selected].down_data_num += 1;
-                this.ajaxHomeList(this.tabs[this.selected].down_data_num, 2, this.tab_ajax);
-                console.log("到达底部");
-            }
-      
+      if (getScrollHeight() == getWindowHeight() + getDocumentTop()) {
+        //当滚动条到底时,这里是触发内容
+        this.tabs[this.selected].down_data_num += 1;
+        this.ajaxHomeList(
+          this.tabs[this.selected].down_data_num,
+          2,
+          this.tab_ajax
+        );
+        console.log("到达底部");
+      }
     }
   }
 };
@@ -212,11 +231,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-/* .hello {
-    position: absolute;
-    top: 4.2rem;
-} */
-
 h1,
 h2 {
   font-weight: normal;
@@ -245,7 +259,6 @@ ul.nav_tab {
   position: fixed;
   top: 4.2rem;
   z-index: 2;
-
 }
 
 li {
@@ -253,6 +266,7 @@ li {
   line-height: 1.5rem;
   width: 100%;
   display: inline-block;
+  cursor: pointer;
 }
 li.cur {
   color: #fff;
@@ -268,59 +282,61 @@ a {
   margin-top: 6rem;
   position: relative;
   overflow-y: scroll;
-  -webkit-overflow-scrolling:touch;  
+  -webkit-overflow-scrolling: touch;
   overflow-x: hidden;
   overflow-y: visible;
 }
-.list{
+.list {
   display: flex;
-  padding: .7rem;
-  z-index: 1
+  padding: 0.7rem;
+  z-index: 1;
+  cursor: pointer;
 }
-.list img{
+.list img {
   width: 3rem;
   height: 3rem;
 }
-.list_title{
+.list_title {
   box-sizing: border-box;
   padding-left: 0.65rem;
 }
-.list_title>h3{
+.list_title > h3 {
   float: left;
   width: 87%;
   box-sizing: border-box;
   overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    break-word: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  break-word: break-all;
   padding-left: 0.25rem;
-      font-weight: 700;
+  font-weight: 700;
   text-align: left;
 }
 
-span.dingtop{
+span.dingtop {
   background: #369219;
 }
-span.elsedingtop{
+span.elsedingtop {
   background-color: rgb(153, 153, 153);
 }
-span.dingtop,span.elsedingtop{
+span.dingtop,
+span.elsedingtop {
   float: left;
-  color:#fff;
-  padding: .1rem .25rem;
-  border-radius: .225rem
+  color: #fff;
+  padding: 0.1rem 0.25rem;
+  border-radius: 0.225rem;
 }
-.content{
-  flex:1;
+.content {
+  flex: 1;
 }
-.timer{
+.timer {
   padding-left: 3rem;
   display: flex;
   justify-content: space-between;
-  color:#9999;
-  margin-top: .3rem;
+  color: #9999;
+  margin-top: 0.3rem;
   text-align: left;
 }
 .nomore {
@@ -357,8 +373,8 @@ span.dingtop,span.elsedingtop{
   -webkit-animation-delay: -0.9s;
   animation-delay: -0.9s;
 }
-.loading{
-  margin-bottom:3rem;
+.loading {
+  margin-bottom: 3rem;
 }
 @-webkit-keyframes cubemove {
   25% {
