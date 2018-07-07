@@ -4,6 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router/router.js'
 import axios from 'axios'
+import Vuex from 'vuex'
+import store from './vuex/store'
+
+Vue.use(Vuex)
 Vue.config.productionTip = false
 // axios.defaults.baseURL = 'https://www.vue-js.com/api/v1'//以下 api 路径均以 https://vue-js.com/api/v1 为前缀
 Vue.prototype.$http = axios
@@ -11,6 +15,7 @@ Vue.prototype.$http = axios
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
@@ -29,7 +34,6 @@ new Vue({
 //         next();
 //     }
 //   })
-
 
 var myInterceptor=axios.interceptors.request.use(
     config => {

@@ -21,7 +21,9 @@
     "vue": "^2.5.2",
     "vue-markdown": "^2.2.4",
     "vue-router": "^3.0.1",
-    "vue-scroller": "^2.2.4"
+    "vue-scroller": "^2.2.4",
+    "vue2-editor": "^2.5.0",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

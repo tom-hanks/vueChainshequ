@@ -32,6 +32,11 @@ export default new Router({
       component: xiaoxi
     },
     {
+      path: '/HelloWorld',
+      name: 'HelloWorld',
+      component: HelloWorld
+    },
+    {
       path: '/wode',
       name: 'wode',
       component: wode

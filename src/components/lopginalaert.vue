@@ -66,6 +66,7 @@ export default {
     height: 12.5rem;
     border-radius: 1rem;
     background: #fff;
+    border-radius: .5rem;
     position: fixed;
     top:50%;
     left: 50%;

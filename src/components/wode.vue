@@ -3,18 +3,10 @@
     <div class="title_top">
         <h2 class="title_title">个人中心</h2>
     </div>
-
-
-
-
-
       <div class="form-class" v-if="!accesstoken">
-        <input class="login" type="text"  @keyup.13="stoken()" placeholder="请输入token" v-model="tokenText">
-        <!-- <input type="submit" @click="stoken()" value="提交2"></input> -->
+        <input class="login" type="text"  @keyup.13="stoken()" placeholder="请输入token进行登录" v-model="tokenText">
+        <button class="form-button" type="submit" @click="stoken()" value="提交2">登录</button>
       </div>
-
-
-
       <main class="main" v-if="accesstoken">
         <img  v-bind:src="userAngth.avatar_url">
         <span  class="name">{{userAngth.loginname}}</span>
@@ -36,27 +28,12 @@
               v-for="(item2,index) in item.er_content"  
               class="add_child" ><i class="iconfont icon-wenjian1"></i></i><span>{{item2.title}}</span></p>
             </li>
-            <!-- <li>
-              <div class="selection_li_top"> 
-                <span class="icom iconfont icon-youjian"></span>
-                <div class="title_sele"><p>最近回复</p><span>2个</span></div>
-                 <div class="selection_li_top_right iconfont icon-fanhui"></div>
-              </div>
-            </li>
-            <li>
-              <div class="selection_li_top"> 
-                <span class="icom iconfont icon-material"></span>
-                <div class="title_sele"><p>收藏主题</p><span>3个</span></div>
-                 <div class="selection_li_top_right iconfont icon-fanhui"></div>
-              </div>
-            </li> -->
           </ul>
         </div>
       </main> 
         <button v-if="accesstoken" class="loginOut" @click="loginOut()"> 退出</button>
         <login-tan v-bind:loginTanFlag="login_bg" @changesbox="showDialog"></login-tan>
   </div>
-
 </template>
 <script>
 import { apis } from "../api/hostApi.js";
@@ -233,7 +210,18 @@ a {
   width: 14.75rem;
   height: 2.125rem;
   padding-left: 1rem;
-  border: 1px solid red;
+  border: 1px solid #009688;
+  border-radius: 0.5rem;
+}
+.form-button {
+  display: block;
+  width: 6rem;
+  height: 2rem;
+  border-radius: 0.4rem;
+  background: #009688;
+  margin: 0 auto;
+  margin-top: 3rem;
+  color: #fff;
 }
 .form-fu .title_top {
   width: 100%;

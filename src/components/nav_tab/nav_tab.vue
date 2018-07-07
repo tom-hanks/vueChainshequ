@@ -161,6 +161,7 @@ export default {
     },
     changeTab(index, tab) {
       //切换tab选择
+      this.tabs[this.selected].down_data_num=0;
       this.selected = index;
       this.loading = "正在加载中...";
       this.tab_ajax = this.tabs[this.selected].tabName;

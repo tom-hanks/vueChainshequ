@@ -3,7 +3,7 @@
         <button class="title" title="发布话题">我是头部</button>
         <main>
             <textarea v-model="content" class="text content" hintText="输入文本，支持markdown格式"rows="5" :underlineShow="false" />
-            <button @click="setData" label="发布话题" class="demo-raised-button" icon="near_me" >发送主题Markdown格式的哦</button>
+            <button @click="setData" label="发布话题" class="demo-raised-button" icon="near_me" >发表</button>
         </main>
     <p>半成品，可发送死数据，输入框可进行markdown编写，在首页的tab里分享里查看</p>
 
@@ -79,11 +79,23 @@ export default {
     flex-direction: column;
 }
 .title {
+    width: 100%;
+    height: 3.125rem;
+    line-height: 3.125rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
     text-align: center;
-    height: 5rem;
+    font-size: 1.125rem;
+    background: #009688;
+    color: #fff;
+    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.117647), 0 1px 4px rgba(0, 0, 0, 0.117647);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.117647), 0 1px 4px rgba(0, 0, 0, 0.117647);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 main {
-    flex: 1;
     margin: 5rem 0;
     padding: 1rem;
     display: flex;
@@ -102,5 +114,11 @@ main {
 }
 textarea {
     height: 10rem;
+}
+.demo-raised-button{
+    padding: .4rem 3rem;
+    border-radius: 2rem;
+    margin: 0 auto;
+    margin-top: 4rem;
 }
 </style>
