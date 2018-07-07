@@ -100,18 +100,18 @@ export default {
       this.tab_ajax = newvalue;
     },
     selected(newvalue) {
-      console.log(this.tabs[this.selected].tabContent.length);
+      // console.log(this.tabs[this.selected].tabContent.length);
       if (this.tabs[this.selected].tabContent.length > 0) {
         this.tabs[this.selected].tabContent = [];
         this.changeTab(newvalue, this.tab_ajax); //为了解决因为keep-alive缓存导致不执行的问题，所以监听触发
       }
 
-      console.log(newvalue);
+      // console.log(newvalue);
     }
   },
   created() {
     //在模板渲染成html前调用，即通常初始化某些属性值，然后再渲染成视图。
-    console.log("测缓存");
+    // console.log("测缓存");
   },
   mounted() {
     this.ajaxHomeList(1, 1, this.tab_ajax);
@@ -127,9 +127,9 @@ export default {
           params: { tab: d, page: a }
         })
         .then(response => {
-          console.log("2222");
+          // console.log("2222");
 
-          console.log(response.data.data.length);
+          // console.log(response.data.data.length);
 
           if (b == 1) {
             // 顶部
@@ -137,14 +137,14 @@ export default {
             this.tabs[this.selected].tabContent = this.tabs[
               this.selected
             ].tabContent.concat(response.data.data);
-            console.log(this.tabs[this.selected].tabContent);
-            console.log("顶部");
+            // console.log(this.tabs[this.selected].tabContent);
+            // console.log("顶部");
           } else {
             // console.log('到底部')
             this.tabs[this.selected].tabContent = this.tabs[
               this.selected
             ].tabContent.concat(response.data.data);
-            console.log(this.tabs[this.selected].tabContent);
+            // console.log(this.tabs[this.selected].tabContent);
           }
           if (response.data.data.length < 10) {
             // console.log('返回数据的长度---'+response.data.data.length)
@@ -156,7 +156,7 @@ export default {
           }
         })
         .catch(function(error) {
-          console.log(error);
+          // console.log(error);
         });
     },
     changeTab(index, tab) {
@@ -223,7 +223,7 @@ export default {
           2,
           this.tab_ajax
         );
-        console.log("到达底部");
+        // console.log("到达底部");
       }
     }
   }

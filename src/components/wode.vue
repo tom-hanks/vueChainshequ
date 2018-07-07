@@ -90,7 +90,7 @@ export default {
   },
   filters: {
     timeago(val) {
-      console.log(val);
+      // console.log(val);
       let time = new Date(val);
       let thistime = timeago();
       return thistime.format(time, "zh_CN"); //将UTC时间转换格式---> 几天前,几小时前...
@@ -108,7 +108,7 @@ export default {
           accesstoken: $eit.tokenText //6b1374b4-00fa-43e9-847a-344a5155afac
         })
         .then(response => {
-          console.log(response.data);
+          // console.log(response.data);
           localStorage.setItem("accesstoken", this.tokenText);
           localStorage.setItem("user_id", response.data.id);
           localStorage.setItem("loginname", response.data.loginname);
@@ -116,7 +116,7 @@ export default {
           this.obtain();
         })
         .catch(function(error) {
-          console.log(error);
+          // console.log(error);
           $eit.login_bg.typePan = true;
           // alert('输入的秘钥错误')
         });
@@ -136,8 +136,8 @@ export default {
         .get(apis + "/user/" + localStorage.getItem("loginname"))
         .then(response => {
           if (response.status == 200) {
-            console.log("刷新页面返回的========");
-            console.log(response.data.data);
+            // console.log("刷新页面返回的========");
+            // console.log(response.data.data);
             $eit.userAngth = response.data.data;
             $eit.loginSuccess[0].numberLength =
               response.data.data.recent_topics.length;
@@ -154,7 +154,7 @@ export default {
         })
         .catch(function(error) {
           alert("我是刷新出的错");
-          console.log(error);
+          // console.log(error);
         });
     },
     loginOut() {
