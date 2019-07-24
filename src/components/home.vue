@@ -62,7 +62,7 @@ export default {
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
 .header{
   width: 100%;
   height:4.2rem ;
@@ -126,11 +126,12 @@ h1, h2 {
 ul {
   list-style-type: none;
   padding: 0;
-}
-li {
+  li {
   display: inline-block;
   margin: 0 10px;
 }
+}
+
 a {
   color: #42b983;
 }
