@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive include="home">
         <router-view></router-view>
-    </keep-alive>
     <ul class="ul_base" v-if="$route.name !== 'details'">
       <router-link active-class="nav_color" to="/home" tag="li"><s class="iconfont icon-shouye"></s>首页</router-link>
       <router-link active-class="nav_color" to="/fabu" tag="li"><s class="iconfont icon-caidan1"></s>发布</router-link>
@@ -18,6 +16,11 @@ export default {
   data () {
     return {
 
+    }
+  },
+  watch:{
+    $route(to,from){
+      // console.log('路由-app----',to,from);
     }
   }
 }

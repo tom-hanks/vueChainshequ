@@ -18,12 +18,14 @@
     "less-loader": "^4.1.0",
     "marked": "^0.4.0",
     "timeago.js": "^3.0.2",
+    "vant": "^2.0.9",
     "vue": "^2.5.2",
     "vue-markdown": "^2.2.4",
     "vue-router": "^3.0.1",
     "vue-scroller": "^2.2.4",
     "vue2-editor": "^2.5.0",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
