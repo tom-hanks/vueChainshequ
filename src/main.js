@@ -46,7 +46,7 @@ var myInterceptor=axios.interceptors.request.use(
                     // return false;
 
             }
-            if(!xtoken){//此处判断是当POST的时候没有token就去输入框的token去验证
+            if(!xtoken){//此处判断是当POST的时候没有token就去输入框的token去验证    77698f91-94d1-4689-89cf-4d6fec5b3bb9
                 if(config.data){
                     xtoken=config.data.accesstoken;
                 }else{

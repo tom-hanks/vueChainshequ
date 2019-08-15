@@ -3,7 +3,20 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-
+var os = require('os'),
+  iptable = {},
+  ifaces = os.networkInterfaces();
+var customIp = []; //用nodeJs获取当前本机的ipv4
+for (var dev in ifaces) {
+  ifaces[dev].forEach(function (details, alias) {
+    if (details.family == 'IPv4') {
+      iptable[dev + (alias ? ':' + alias : '')] = details.address;
+      customIp.push(details)
+    }
+  });
+}
+console.log('获取ip')
+console.log(customIp[0].address);
 module.exports = {
   dev: {
 
@@ -14,8 +27,8 @@ module.exports = {
     
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST  localhost  家192.168.31.137  司192.168.1.171
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    host: customIp[0].address, // can be overwritten by process.env.HOST  localhost  家192.168.31.137  司192.168.1.171 'localhost'
+    port: 8111, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: true,
