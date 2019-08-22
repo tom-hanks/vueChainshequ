@@ -7,9 +7,9 @@ import xiaoxi from '@/components/xiaoxi'
 import wode from '@/components/wode'
 import details from '@/components/detailsListHome'
 import nav_tab from '@/components/nav_tab/nav_tab'
-import VueScroller from 'vue-scroller'
+// import VueScroller from 'vue-scroller'
 Vue.use(Router)
-Vue.use(VueScroller)
+// Vue.use(VueScroller)
 
 export default new Router({
   routes: [
@@ -17,9 +17,9 @@ export default new Router({
       path: '*',
       name: 'home',
       component: home,
-      meta:{
-        keep:true
-      }
+      // meta:{
+      //   keep:true
+      // }
     },
     {
       path: '/fabu',

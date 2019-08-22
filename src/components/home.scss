@@ -1,0 +1,107 @@
+.header {
+    width: 100%;
+    // height: 4.2rem;
+    line-height: 4.2rem;
+    background: #009688;
+    // position: fixed;
+    // top: 0;
+    z-index: 3;
+    border-top: 1px solid #fff;
+  }
+  .header_style0 {
+    background: #7e57c2;
+    color: #fff;
+  }
+  .header_style1 {
+    background-color: #474a4f;
+    color: #ffffff;
+  }
+  .header_style2 {
+    background-color: #009688;
+    color: #ffffff;
+  }
+  ul.nav_Cai {
+    background: #fff;
+    border-radius: 3px;
+    position: absolute;
+    top: 0;
+    right: 15px;
+    -moz-box-shadow: 0 9px 30px -6px rgba(0, 0, 0, 0.2),
+      0 18px 20px -10px rgba(0, 0, 0, 0.04), 0 18px 20px -10px rgba(0, 0, 0, 0.04),
+      0 10px 20px -10px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 9px 30px -6px rgba(0, 0, 0, 0.2),
+      0 18px 20px -10px rgba(0, 0, 0, 0.04), 0 18px 20px -10px rgba(0, 0, 0, 0.04),
+      0 10px 20px -10px rgba(0, 0, 0, 0.04);
+  }
+  ul.nav_Cai > li {
+    display: block;
+    height: 2.4rem;
+    line-height: 2.4rem;
+    color: #333333;
+  }
+  span.logo {
+    float: left;
+    width: 10%;
+    height: 2.5rem;
+    position: absolute;
+    top: 0.7rem;
+    left: 0.76rem;
+    background: url(../assets/logo.png) no-repeat center;
+    background-size: 100% 100%;
+  }
+  span.caidan {
+    font-size: 28px;
+    float: right;
+    color: #fff;
+    position: absolute;
+    right: 28px;
+  }
+  ul.nav_Cai > li.heightliang {
+    color: red;
+  }
+  h1,
+  h2 {
+    font-weight: normal;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+    li {
+      display: inline-block;
+      margin: 0 10px;
+    }
+  }
+  ul.nav_tab {
+    display: flex;
+    // -webkit-box-pack: justify;
+    width: 100%;
+    background-color: #009688;
+    li {
+      height: 1.5rem;
+      line-height: 1.5rem;
+      width: 100%;
+      display: inline-block;
+      cursor: pointer;
+    }
+    li.cur {
+      color: #fff;
+      border-bottom: 2px solid red;
+    }
+  }
+  
+  a {
+    color: #42b983;
+  }
+  /* 可以设置不同的进入和离开动画 */
+  /* 设置持续时间和动画函数 */
+  .slide-fade-enter-active {
+    transition: all 0.3s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+  }
+  .slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active for below version 2.1.8 */ {
+    transform: translateX(10px);
+    opacity: 0;
+  }

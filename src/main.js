@@ -5,11 +5,18 @@ import App from './App'
 import router from './router/router.js'
 import axios from 'axios'
 import Vuex from 'vuex'
-import store from './vuex/store'
+import store from './store'
+import Vant from 'vant';
+import 'vant/lib/index.css';
+import http from '../static/js/http.js' // server
+
+Vue.use(Vant);
 
 Vue.use(Vuex)
+
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
+Vue.prototype.$Http = http
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -39,7 +46,7 @@ var myInterceptor=axios.interceptors.request.use(
                     // return false;
 
             }
-            if(!xtoken){//此处判断是当POST的时候没有token就去输入框的token去验证
+            if(!xtoken){//此处判断是当POST的时候没有token就去输入框的token去验证    77698f91-94d1-4689-89cf-4d6fec5b3bb9
                 if(config.data){
                     xtoken=config.data.accesstoken;
                 }else{
